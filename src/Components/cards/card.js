@@ -18,7 +18,7 @@ export default function Card(props) {
   });
 
   const handleDeleteGame = () => {
-    Axios.delete(`http://localhost:3001/delete/${editValues.id}`);
+    Axios.delete(`https://server-mxrj.onrender.com/delete/${editValues.id}`);
     window.location.reload()
   };
 

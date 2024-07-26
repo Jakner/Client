@@ -15,7 +15,7 @@ export default function FormDialog(props) {
     });
 
    const handleEditGame = () => {
-        Axios.put("http://localhost:3001/edit",{
+        Axios.put("https://server-mxrj.onrender.com/edit",{
             id: editValues.id,
             name: editValues.name,
             cost: editValues.cost,
