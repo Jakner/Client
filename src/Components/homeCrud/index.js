@@ -20,7 +20,7 @@ export default function HomeCrud() {
 
   function handleClickSearch() {
     const nome = values.pesquisa
-    Axios.get(`https://server-mxrj.onrender.comgetCards/${nome}`)
+    Axios.get(`https://server-mxrj.onrender.com/getCards/${nome}`)
       .then(({ data }) => {
         setListGames(data);
       });
@@ -28,7 +28,7 @@ export default function HomeCrud() {
 
   const handleClickButton = () => {
     console.log(values)
-    Axios.post("https://server-mxrj.onrender.com:3001/insert", {
+    Axios.post("https://server-mxrj.onrender.com/insert", {
       name: values.name,
       cost: values.cost,
     }).then((response) => {
@@ -37,7 +37,7 @@ export default function HomeCrud() {
   };
 
   useEffect(() => {
-    axios.get('https://server-mxrj.onrender.com:3001/get')
+    axios.get('https://server-mxrj.onrender.com/get')
       .then(({ data }) => setListGames(data))
   }, [values]);
 
