@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 function Cadastro({ logado = false }) {
 
     const handleRegister = (values) => {
-        Axios.post("http://localhost:3003/register", {
+        Axios.post("https://server-mxrj.onrender.com/register", {
             email: values.email,
             password: values.password,
         }).then((response) => {

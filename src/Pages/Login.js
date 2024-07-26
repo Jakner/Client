@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 function Login({logado=false}) {
   const handleLogin = (values) => {
-    Axios.post("http://localhost:3003/login", {
+    Axios.post("https://server-mxrj.onrender.com/login", {
       email: values.email,
       password: values.password,
     }).then((response) => {
