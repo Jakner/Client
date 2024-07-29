@@ -17,8 +17,8 @@ export default function Card(props) {
     cost: props.cost,
   });
 
-  const handleDeleteGame = () => {
-    Axios.delete(`https://server-mxrj.onrender.com/delete/${editValues.id}`);
+  const handleDeleteGame = async () => {
+    await Axios.delete(`https://server-mxrj.onrender.com/delete/${editValues.id}`);
     window.location.reload()
   };
 
