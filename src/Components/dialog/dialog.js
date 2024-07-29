@@ -14,8 +14,8 @@ export default function FormDialog(props) {
         cost: props.cost,
     });
 
-   const handleEditGame = () => {
-        Axios.put("https://server-mxrj.onrender.com/edit",{
+   const handleEditGame = async () => {
+        await Axios.put("https://server-mxrj.onrender.com/edit",{
             id: editValues.id,
             name: editValues.name,
             cost: editValues.cost,
