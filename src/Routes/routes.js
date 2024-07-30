@@ -1,14 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, } from "react-router-dom"
-
 import Login from "../Pages/Login"
 import Cadastro from "../Pages/Cadastro";
 import Crud from '../Pages/Crud'
 
-const logado = localStorage.getItem('@user');
-
-
 const Rotas = () => {
+    const logado = !!localStorage.getItem('@user');
     return (
         <div className="App">
             <BrowserRouter>
@@ -22,7 +19,5 @@ const Rotas = () => {
 
     );
 };
-
-
 
 export default Rotas;
