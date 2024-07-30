@@ -18,7 +18,7 @@ function Login({logado=false}) {
 
       if (page === true) {
         localStorage.setItem('@user', JSON.stringify(response.config.data));
-        navigate('/'); // Redirecionar para a página inicial (CRUD)
+        window.location.reload();
         } else {
         alert(response.data.msg);
       }
