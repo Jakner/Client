@@ -3,9 +3,11 @@ import * as yup from "yup";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import Axios from "axios";
 import Img from "../Assets/database.svg"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login({logado=false}) {
+  const navigate = useNavigate(); // Importar e inicializar o hook useNavigat
+  
   const handleLogin = (values) => {
     Axios.post("https://server-mxrj.onrender.com/login", {
       email: values.email,
@@ -16,8 +18,8 @@ function Login({logado=false}) {
 
       if (page === true) {
         localStorage.setItem('@user', JSON.stringify(response.config.data));
-        window.location.reload();
-      } else {
+        navigate('/'); // Redirecionar para a página inicial (CRUD)
+        } else {
         alert(response.data.msg);
       }
 
