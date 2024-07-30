@@ -6,7 +6,19 @@ import { FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 
 export default function HomeCrud() {
-  const [values, setValues] = useState({ name: '', cost: '', pesquisa: '' });
+  // Atualize o estado para incluir os novos campos
+  const [values, setValues] = useState({
+    nome: '',
+    dataNascimento: '',
+    email: '',
+    telefone: '',
+    endereco: '',
+    rg: '',
+    cpf: '',
+    matricula: '',
+    valorMensalidade: '',
+    pesquisa: '',
+  });
   const [listGames, setListGames] = useState([]);
 
   // Função para atualizar valores
@@ -17,14 +29,14 @@ export default function HomeCrud() {
     }));
   }
 
-  // Função para buscar jogos
+  // Função para buscar itens
   const handleClickSearch = async () => {
     const nome = values.pesquisa;
     try {
       const { data } = await Axios.get(`https://server-mxrj.onrender.com/getCards/${nome}`);
       setListGames(data);
     } catch (error) {
-      console.error("Erro ao buscar jogos:", error);
+      console.error("Erro ao buscar itens:", error);
     }
   };
 
@@ -32,16 +44,34 @@ export default function HomeCrud() {
   const handleClickButton = async () => {
     try {
       await Axios.post("https://server-mxrj.onrender.com/insert", {
-        name: values.name,
-        cost: values.cost,
+        nome: values.nome,
+        dataNascimento: values.dataNascimento,
+        email: values.email,
+        telefone: values.telefone,
+        endereco: values.endereco,
+        rg: values.rg,
+        cpf: values.cpf,
+        matricula: values.matricula,
+        valorMensalidade: values.valorMensalidade,
       });
-      // Atualiza a lista de produtos após inserção
+      // Atualiza a lista de itens após inserção
       const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
       setListGames(data);
       // Limpa os campos após a inserção
-      setValues({ name: '', cost: '', pesquisa: '' });
+      setValues({
+        nome: '',
+        dataNascimento: '',
+        email: '',
+        telefone: '',
+        endereco: '',
+        rg: '',
+        cpf: '',
+        matricula: '',
+        valorMensalidade: '',
+        pesquisa: '',
+      });
     } catch (error) {
-      console.error("Erro ao cadastrar produto:", error);
+      console.error("Erro ao cadastrar item:", error);
     }
   };
 
@@ -110,19 +140,82 @@ export default function HomeCrud() {
       <div className="inserts">
         <input
           type="text"
-          name="name"
-          placeholder="Produto"
+          name="nome"
+          placeholder="Nome"
           className="form-control produto"
-          value={values.name}
+          value={values.nome}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="date"
+          name="dataNascimento"
+          placeholder="Data de Nascimento"
+          className="form-control"
+          value={values.dataNascimento}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          className="form-control"
+          value={values.email}
           onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
         />
 
         <input
           type="text"
-          name="cost"
-          placeholder="Preço"
-          className="form-control preco"
-          value={values.cost}
+          name="telefone"
+          placeholder="Telefone"
+          className="form-control"
+          value={values.telefone}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="text"
+          name="endereco"
+          placeholder="Endereço"
+          className="form-control"
+          value={values.endereco}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="text"
+          name="rg"
+          placeholder="RG"
+          className="form-control"
+          value={values.rg}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="text"
+          name="cpf"
+          placeholder="CPF"
+          className="form-control"
+          value={values.cpf}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="text"
+          name="matricula"
+          placeholder="Matrícula"
+          className="form-control"
+          value={values.matricula}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
+          type="number"
+          name="valorMensalidade"
+          placeholder="Valor da Mensalidade"
+          className="form-control"
+          value={values.valorMensalidade}
           onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
         />
 
@@ -130,7 +223,7 @@ export default function HomeCrud() {
           className="btn btn-primary botao"
           onClick={handleClickButton}
         >
-          Cadastrar produto
+          Cadastrar
         </button>
       </div>
 
