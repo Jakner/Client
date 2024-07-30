@@ -233,11 +233,17 @@ export default function HomeCrud() {
             key={value.id}
             listCard={listGames}
             setListCard={setListGames}
-            id={value.iditems}
-            name={value.name}
-            cost={value.cost}
-          />
-        ))}
+            id={value.id}
+            nome={value.nome}
+            dataNascimento={value.dataNascimento}
+            email={value.email}
+            telefone={value.telefone}
+            endereco={value.endereco}
+            rg={value.rg}
+            cpf={value.cpf}
+            matricula={value.matricula}
+            valorMensalidade={value.valorMensalidade} />
+          ))}
 
       <a className="scroll" href="#top"><FaAngleUp /></a>
     </div>
