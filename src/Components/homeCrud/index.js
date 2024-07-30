@@ -9,14 +9,14 @@ export default function HomeCrud() {
   // Atualize o estado para incluir os novos campos
   const [values, setValues] = useState({
     nome: '',
-    dataNascimento: '',
+    data_nascimento: '',
     email: '',
     telefone: '',
     endereco: '',
     rg: '',
     cpf: '',
     matricula: '',
-    valorMensalidade: '',
+    valor_mensalidade: '',
     pesquisa: '',
   });
   const [listGames, setListGames] = useState([]);
@@ -45,14 +45,14 @@ export default function HomeCrud() {
     try {
       await Axios.post("https://server-mxrj.onrender.com/insert", {
         nome: values.nome,
-        dataNascimento: values.dataNascimento,
+        data_nascimento: values.data_nascimento,
         email: values.email,
         telefone: values.telefone,
         endereco: values.endereco,
         rg: values.rg,
         cpf: values.cpf,
         matricula: values.matricula,
-        valorMensalidade: values.valorMensalidade,
+        valor_mensalidade: values.valor_mensalidade,
       });
       // Atualiza a lista de itens após inserção
       const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
@@ -60,14 +60,14 @@ export default function HomeCrud() {
       // Limpa os campos após a inserção
       setValues({
         nome: '',
-        dataNascimento: '',
+        data_nascimento: '',
         email: '',
         telefone: '',
         endereco: '',
         rg: '',
         cpf: '',
         matricula: '',
-        valorMensalidade: '',
+        valor_mensalidade: '',
         pesquisa: '',
       });
     } catch (error) {
@@ -149,10 +149,10 @@ export default function HomeCrud() {
 
         <input
           type="date"
-          name="dataNascimento"
+          name="data_nascimento"
           placeholder="Data de Nascimento"
           className="form-control"
-          value={values.dataNascimento}
+          value={values.data_nascimento}
           onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
         />
 
@@ -212,10 +212,10 @@ export default function HomeCrud() {
 
         <input
           type="number"
-          name="valorMensalidade"
+          name="valor_mensalidade"
           placeholder="Valor da Mensalidade"
           className="form-control"
-          value={values.valorMensalidade}
+          value={values.valor_mensalidade}
           onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
         />
 
@@ -235,14 +235,14 @@ export default function HomeCrud() {
             setListCard={setListGames}
             id={value.id}
             nome={value.nome}
-            dataNascimento={value.dataNascimento}
+            data_nascimento={value.data_nascimento}
             email={value.email}
             telefone={value.telefone}
             endereco={value.endereco}
             rg={value.rg}
             cpf={value.cpf}
             matricula={value.matricula}
-            valorMensalidade={value.valorMensalidade} />
+            valor_mensalidade={value.valor_mensalidade} />
           ))}
 
       <a className="scroll" href="#top"><FaAngleUp /></a>
