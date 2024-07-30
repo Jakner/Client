@@ -16,14 +16,14 @@ export default function Card(props) {
   const [editValues] = useState({
     id: props.id,
     nome: props.nome,
-    dataNascimento: props.dataNascimento,
+    data_nascimento: props.data_nascimento,
     email: props.email,
     telefone: props.telefone,
     endereco: props.endereco,
     rg: props.rg,
     cpf: props.cpf,
     matricula: props.matricula,
-    valorMensalidade: props.valorMensalidade,
+    valor_mensalidade: props.valor_mensalidade,
   });
 
   // Função para deletar o item
@@ -43,14 +43,14 @@ export default function Card(props) {
         open={open}
         setOpen={setOpen}
         nome={props.nome}
-        dataNascimento={props.dataNascimento}
+        data_nascimento={props.data_nascimento}
         email={props.email}
         telefone={props.telefone}
         endereco={props.endereco}
         rg={props.rg}
         cpf={props.cpf}
         matricula={props.matricula}
-        valorMensalidade={props.valorMensalidade}
+        valor_mensalidade={props.valor_mensalidade}
         listCard={props.listCard}
         setListCard={props.setListCard}
         id={props.id} 
@@ -78,14 +78,14 @@ export default function Card(props) {
             <tr className='linha-prod'>
               <th scope="row">{props.id}</th>
               <td>{props.nome}</td>
-              <td>{props.dataNascimento}</td>
+              <td>{props.data_nascimento}</td>
               <td>{props.email}</td>
               <td>{props.telefone}</td>
               <td>{props.endereco}</td>
               <td>{props.rg}</td>
               <td>{props.cpf}</td>
               <td>{props.matricula}</td>
-              <td>{props.valorMensalidade}</td>
+              <td>{props.valor_mensalidade}</td>
               <td className="btn-func">
                 <button
                   type="button"
