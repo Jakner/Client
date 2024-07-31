@@ -60,7 +60,7 @@ export default function FormDialog(props) {
           margin="dense"
           id="nome"
           label="Nome"
-          defaultValue={props.name}
+          defaultValue={props.nome}
           onChange={handleChangeValues}
           type="text"
           fullWidth

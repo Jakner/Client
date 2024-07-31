@@ -110,7 +110,9 @@ header {
 
 .main {
   margin-top: 50px;
-  margin-left: 5%;
+  width: 100%;
+  font-size: 11px;
+  margin-left: 1%;
   margin-right: 5%;
 }
 
