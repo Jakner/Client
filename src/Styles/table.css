@@ -1,0 +1,56 @@
+/* table.css */
+.table-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .table-header, .table-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Espaçamento entre linhas */
+  }
+  
+  .table-header-cell, .table-cell {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .table-header-cell {
+    font-weight: bold;
+    background-color: #f4f4f4;
+  }
+  
+  .table-row {
+    border-bottom: 1px solid #ddd;
+    display: none;
+  }
+  
+  .table-actions {
+    display: flex;
+    flex-direction: row;
+    margin-left: -90%;
+    gap: 2px; /* Espaçamento entre botões */
+  }
+  
+  .btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .edit {
+    background-color: #28a745;
+  }
+  
+  .del {
+    background-color: #dc3545;
+  }  

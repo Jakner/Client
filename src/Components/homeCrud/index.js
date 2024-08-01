@@ -4,6 +4,7 @@ import Card from "../cards/card";
 import { FaSearch, FaRedo } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
+import FixedEditButton from "./FixedEditButton";
 
 export default function HomeCrud() {
   // Atualize o estado para incluir os novos campos
@@ -40,7 +41,7 @@ export default function HomeCrud() {
     }
   };
 
-  // Função para cadastrar produto
+  //Função para cadastrar produto
   const handleClickButton = async () => {
     try {
       await Axios.post("https://server-mxrj.onrender.com/insert", {
@@ -124,6 +125,12 @@ export default function HomeCrud() {
                   >
                     <FaRedo />
                   </button>
+                  {/* Botão de edição fixo */}
+                  <FixedEditButton 
+                    // Adicione qualquer prop necessária para o componente de edição
+                    listCard={listGames}
+                    setListCard={setListGames}
+                  />
                   <button
                     onClick={sair}
                     className="exit"
@@ -225,6 +232,7 @@ export default function HomeCrud() {
         >
           Cadastrar
         </button>
+
       </div>
 
       {listGames.length > 0 &&
@@ -243,9 +251,10 @@ export default function HomeCrud() {
             cpf={value.cpf}
             matricula={value.matricula}
             valor_mensalidade={value.valor_mensalidade} />
-          ))}
+        ))}
 
       <a className="scroll" href="#top"><FaAngleUp /></a>
+
     </div>
   );
 }
