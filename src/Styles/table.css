@@ -31,6 +31,7 @@
   .table-actions {
     display: flex;
     flex-direction: row;
+    background: #1A2E40;  
     margin-left: -90%;
     gap: 2px; /* Espaçamento entre botões */
   }
