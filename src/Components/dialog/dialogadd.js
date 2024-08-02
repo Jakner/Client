@@ -65,10 +65,28 @@ export default function FormDialogadd(props) {
 
     const handleValorChange = (e) => {
         const { value } = e.target;
-        // Permite apenas números e faz a formatação se necessário
+        // Permite apenas números
         setEditValues(prevValues => ({
             ...prevValues,
             valor_mensalidade: value.replace(/[^0-9]/g, ''),
+        }));
+    };
+
+    const handleTelefoneChange = (e) => {
+        const { value } = e.target;
+        // Permite apenas números
+        setEditValues(prevValues => ({
+            ...prevValues,
+            telefone: value.replace(/[^0-9]/g, ''),
+        }));
+    };
+
+    const handleRgChange = (e) => {
+        const { value } = e.target;
+        // Permite apenas números
+        setEditValues(prevValues => ({
+            ...prevValues,
+            rg: value.replace(/[^0-9]/g, ''),
         }));
     };
 
@@ -103,7 +121,7 @@ export default function FormDialogadd(props) {
                     label="Email"
                     value={editValues.email}
                     onChange={handleChangeValues}
-                    type="text"
+                    type="email" // Garante que o valor seja um email válido
                     fullWidth
                 />
                 <TextField
@@ -112,8 +130,10 @@ export default function FormDialogadd(props) {
                     id="telefone"
                     label="Telefone"
                     value={editValues.telefone}
-                    onChange={handleChangeValues}
+                    onChange={handleTelefoneChange}
                     type="text"
+                    inputMode="numeric" // Exibe teclado numérico em dispositivos móveis
+                    pattern="[0-9]*" // Validação de números apenas
                     fullWidth
                 />
                 <TextField
@@ -132,8 +152,10 @@ export default function FormDialogadd(props) {
                     id="rg"
                     label="RG"
                     value={editValues.rg}
-                    onChange={handleChangeValues}
+                    onChange={handleRgChange}
                     type="text"
+                    inputMode="numeric" // Exibe teclado numérico em dispositivos móveis
+                    pattern="[0-9]*" // Validação de números apenas
                     fullWidth
                 />
                 <TextField
