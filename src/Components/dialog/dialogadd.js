@@ -7,6 +7,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Axios from "axios";
 
+const MyModal = () => {
+  const [value, setValue] = useState('');
+  
+  const handleValueChange = (e) => {
+    // Evita a entrada de caracteres não numéricos
+    const newValue = e.target.value.replace(/[^0-9]/g, '');
+    setValue(newValue);
+  };
+
+
 export default function FormDialogadd(props) {
     const [editValues,setEditValues] = useState({
         id: props.id,
@@ -92,7 +102,11 @@ export default function FormDialogadd(props) {
           label="Telefone"
           defaultValue={props.telefone}
           onChange={handleChangeValues}
+          inputMode="numeric"
           type="text"
+          value={value}
+          pattern="[0-9]"
+          onChange={handleValueChange}
           fullWidth
         />
         <TextField
