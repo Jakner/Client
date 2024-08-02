@@ -7,16 +7,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Axios from "axios";
 
-const MyModal = () => {
-  const [value, setValue] = useState('');
-  
-  const handleValueChange = (e) => {
-    // Evita a entrada de caracteres não numéricos
-    const newValue = e.target.value.replace(/[^0-9]/g, '');
-    setValue(newValue);
-  };
-
-
 export default function FormDialogadd(props) {
     const [editValues,setEditValues] = useState({
         id: props.id,
@@ -60,6 +50,15 @@ export default function FormDialogadd(props) {
         [value.target.id]: value.target.value,
     }))
   };
+
+  const MyModal = () => {
+    const [value, setValue] = useState('');
+    
+    const handleValueChange = (e) => {
+      // Evita a entrada de caracteres não numéricos
+      const newValue = e.target.value.replace(/[^0-9]/g, '');
+      setValue(newValue);
+    };
 
   return (
     <Dialog open={props.open} onClose={handleClose}>
