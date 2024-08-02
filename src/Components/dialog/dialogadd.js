@@ -111,7 +111,7 @@ export default function FormDialogadd(props) {
                     label="Data de Nascimento"
                     value={editValues.data_nascimento}
                     onChange={handleChangeValues}
-                    type="text"
+                    type="date"
                     fullWidth
                 />
                 <TextField
