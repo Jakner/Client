@@ -184,7 +184,7 @@ export default function FormDialogadd(props) {
                     autoFocus
                     margin="dense"
                     id="vencimento"
-                    label="Vencimentola"
+                    label="Vencimento"
                     value={editValues.vencimento}
                     onChange={handleChangeValues}
                     type="text"
