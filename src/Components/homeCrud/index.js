@@ -4,7 +4,7 @@ import Card from "../cards/card";
 import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "./FixedEditButton";
-import { format } from "date-fns";
+import { format, isSameMonth, parseISO, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 export default function HomeCrud() {
   const [values, setValues] = useState({
@@ -22,7 +22,6 @@ export default function HomeCrud() {
   });
   const [listGames, setListGames] = useState([]);
 
-  // Função para atualizar valores
   function handleChangeValues(name, value) {
     setValues((prevValue) => ({
       ...prevValue,
@@ -30,7 +29,6 @@ export default function HomeCrud() {
     }));
   }
 
-  // Função para buscar itens
   const handleClickSearch = async () => {
     const nome = values.pesquisa;
     try {
@@ -41,24 +39,11 @@ export default function HomeCrud() {
     }
   };
 
-  // Função para cadastrar produto
   const handleClickButton = async () => {
     try {
-      await Axios.post("https://server-mxrj.onrender.com/insert", {
-        nome: values.nome,
-        data_nascimento: values.data_nascimento,
-        email: values.email,
-        telefone: values.telefone,
-        endereco: values.endereco,
-        rg: values.rg,
-        cpf: values.cpf,
-        matricula: values.matricula,
-        valor_mensalidade: values.valor_mensalidade,
-      });
-      // Atualiza a lista de itens após inserção
+      await Axios.post("https://server-mxrj.onrender.com/insert", values);
       const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
       setListGames(data);
-      // Limpa os campos após a inserção
       setValues({
         nome: '',
         data_nascimento: '',
@@ -77,7 +62,6 @@ export default function HomeCrud() {
     }
   };
 
-  // Efeito para buscar todos os itens ao montar o componente
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -91,10 +75,28 @@ export default function HomeCrud() {
     fetchData();
   }, []);
 
-  // Cálculo do valor total das mensalidades
+  const getDateFromDay = (dayString) => {
+    const day = parseInt(dayString, 10);
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), day);
+  };
+
   const totalMensalidades = listGames.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade), 0);
 
-  // Função para sair e limpar localStorage
+  const aniversariantesDoMes = listGames.filter((item) =>
+    isSameMonth(parseISO(item.data_nascimento), new Date())
+  );
+
+  const startOfWeekDate = startOfWeek(new Date());
+  const endOfWeekDate = endOfWeek(new Date());
+
+  // Cálculo para encontrar as datas de vencimento da semana corrente
+  const vencimentosDaSemana = listGames.filter((item) => {
+    if (!item.vencimento) return false; // Ignorar se não houver informação de vencimento
+    const dataVencimento = getDateFromDay(item.vencimento);
+    return isWithinInterval(dataVencimento, { start: startOfWeekDate, end: endOfWeekDate });
+  });
+
   const sair = () => {
     localStorage.clear();
     window.location.reload();
@@ -141,102 +143,37 @@ export default function HomeCrud() {
       </header>
 
       <div className="inserts">
-        <input
-          type="text"
-          name="nome"
-          placeholder="Nome"
-          className="form-control produto"
-          value={values.nome}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="date"
-          name="data_nascimento"
-          placeholder="Data de Nascimento"
-          className="form-control"
-          value={values.data_nascimento}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className="form-control"
-          value={values.email}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="telefone"
-          placeholder="Telefone"
-          className="form-control"
-          value={values.telefone}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="endereco"
-          placeholder="Endereço"
-          className="form-control"
-          value={values.endereco}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="rg"
-          placeholder="RG"
-          className="form-control"
-          value={values.rg}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="cpf"
-          placeholder="CPF"
-          className="form-control"
-          value={values.cpf}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="matricula"
-          placeholder="Matrícula"
-          className="form-control"
-          value={values.matricula}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="number"
-          name="valor_mensalidade"
-          placeholder="Valor da Mensalidade"
-          className="form-control"
-          value={values.valor_mensalidade}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <button
-          className="btn btn-primary botao"
-          onClick={handleClickButton}
-        >
+        {["nome", "data_nascimento", "email", "telefone", "endereco", "rg", "cpf", "matricula", "vencimento", "valor_mensalidade"].map((field, idx) => (
+          <input
+            key={idx}
+            type={field === "valor_mensalidade" ? "number" : "text"}
+            name={field}
+            placeholder={field.replace("_", " ").toUpperCase()}
+            className="form-control"
+            value={values[field]}
+            onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+          />
+        ))}
+        <button className="btn btn-primary botao" onClick={handleClickButton}>
           Cadastrar
         </button>
       </div>
 
       <div className="dashboard">
         <h3>Valor Total das Mensalidades: R$ {totalMensalidades.toFixed(2)}</h3>
-        <h3>Datas de Vencimento e Aniversário:</h3>
+        <h3>Aniversariantes do Mês:</h3>
         <ul>
-          {listGames.map((item) => (
+          {aniversariantesDoMes.map((item) => (
             <li key={item.id}>
-              {item.nome}: Vencimento - {item.vencimento}, Aniversário - {format(new Date(item.data_nascimento), 'dd/MM/yyyy')}
+              {item.nome}: {format(parseISO(item.data_nascimento), 'yyyy-mm-dd')}
+            </li>
+          ))}
+        </ul>
+        <h3>Vencimentos da Semana:</h3>
+        <ul>
+          {vencimentosDaSemana.map((item) => (
+            <li key={item.id}>
+              {item.nome} - {item.vencimento} - {item.valor_mensalidade} - Tel - {item.telefone}
             </li>
           ))}
         </ul>
@@ -248,16 +185,8 @@ export default function HomeCrud() {
             key={value.id}
             listCard={listGames}
             setListCard={setListGames}
-            id={value.id}
-            nome={value.nome}
-            data_nascimento={value.data_nascimento}
-            email={value.email}
-            telefone={value.telefone}
-            endereco={value.endereco}
-            rg={value.rg}
-            cpf={value.cpf}
-            matricula={value.matricula}
-            valor_mensalidade={value.valor_mensalidade} />
+            {...value}
+          />
         ))}
 
       <a className="scroll" href="#top"><FaAngleUp /></a>
