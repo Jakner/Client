@@ -21,6 +21,7 @@ export default function HomeCrud() {
     pesquisa: '',
   });
   const [listGames, setListGames] = useState([]);
+  const [filteredList, setFilteredList] = useState([]); // Estado para armazenar a lista filtrada
 
   function handleChangeValues(name, value) {
     setValues((prevValue) => ({
@@ -33,7 +34,7 @@ export default function HomeCrud() {
     const nome = values.pesquisa;
     try {
       const { data } = await Axios.get(`https://server-mxrj.onrender.com/getCards/${nome}`);
-      setListGames(data);
+      setFilteredList(data); // Atualize o estado com a lista filtrada
     } catch (error) {
       console.error("Erro ao buscar itens:", error);
     }
@@ -44,6 +45,7 @@ export default function HomeCrud() {
       await Axios.post("https://server-mxrj.onrender.com/insert", values);
       const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
       setListGames(data);
+      setFilteredList(data); // Atualize o estado com a lista completa após inserção
       setValues({
         nome: '',
         data_nascimento: '',
@@ -67,6 +69,7 @@ export default function HomeCrud() {
       try {
         const { data } = await Axios.get('https://server-mxrj.onrender.com/get');
         setListGames(data);
+        setFilteredList(data); // Inicialmente, a lista filtrada é igual à lista completa
       } catch (error) {
         console.error("Erro ao buscar todos os itens:", error);
       }
@@ -78,22 +81,19 @@ export default function HomeCrud() {
   const getDateFromDay = (dayString) => {
     const day = parseInt(dayString, 10);
     const today = new Date();
-    // Define o ano e o mês corrente no horário UTC
     return new Date(Date.UTC(today.getFullYear(), today.getMonth(), day));
   };
 
-  const totalMensalidades = listGames.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade || 0), 0);
+  const totalMensalidades = filteredList.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade || 0), 0);
 
-  // Aniversariantes do Mês
-  const aniversariantesDoMes = listGames.filter((item) => {
-    if (!item.data_nascimento) return false; // Ignorar se não houver informação de data de nascimento
+  const aniversariantesDoMes = filteredList.filter((item) => {
+    if (!item.data_nascimento) return false;
     const dataNascimento = parseISO(item.data_nascimento);
     const mesNascimento = getMonth(dataNascimento);
     const mesAtual = getMonth(new Date());
     return mesNascimento === mesAtual;
   });
 
-  // Cálculo da idade
   const calcularIdade = (dataNascimento) => {
     const nascimento = parseISO(dataNascimento);
     const hoje = new Date();
@@ -104,9 +104,8 @@ export default function HomeCrud() {
   const startOfWeekDate = startOfWeek(new Date());
   const endOfWeekDate = endOfWeek(new Date());
 
-  // Cálculo para encontrar as datas de vencimento da semana corrente
-  const vencimentosDaSemana = listGames.filter((item) => {
-    if (!item.vencimento) return false; // Ignorar se não houver informação de vencimento
+  const vencimentosDaSemana = filteredList.filter((item) => {
+    if (!item.vencimento) return false;
     const dataVencimento = getDateFromDay(item.vencimento);
     return isWithinInterval(dataVencimento, { start: startOfWeekDate, end: endOfWeekDate });
   });
@@ -145,7 +144,7 @@ export default function HomeCrud() {
                   >
                     <FaRedo />
                   </button>
-                  <FixedEditButton listCard={listGames} setListCard={setListGames} />
+                  <FixedEditButton listCard={filteredList} setListCard={setFilteredList} />
                   <button onClick={sair} className="exit">
                     <TbLogout />
                   </button>
@@ -177,28 +176,36 @@ export default function HomeCrud() {
         <h3>Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
         <h3>Aniversariantes do Mês:</h3>
         <ul>
-          {aniversariantesDoMes.map((item) => (
-            <li key={item.id}>
-              {item.nome}: {format(parseISO(item.data_nascimento), 'dd/MM')} - {calcularIdade(item.data_nascimento)} anos
-            </li>
-          ))}
+          {aniversariantesDoMes.length > 0 ? (
+            aniversariantesDoMes.map((item) => (
+              <li key={item.id}>
+                {item.nome}: {format(parseISO(item.data_nascimento), 'dd/MM')} - {calcularIdade(item.data_nascimento)} anos
+              </li>
+            ))
+          ) : (
+            <li>Nenhum aniversariante encontrado.</li>
+          )}
         </ul>
         <h3>Vencimentos da Semana:</h3>
         <ul>
-          {vencimentosDaSemana.map((item) => (
-            <li key={item.id}>
-              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: {item.telefone}
-            </li>
-          ))}
+          {vencimentosDaSemana.length > 0 ? (
+            vencimentosDaSemana.map((item) => (
+              <li key={item.id}>
+                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: {item.telefone}
+              </li>
+            ))
+          ) : (
+            <li>Nenhum vencimento encontrado para esta semana.</li>
+          )}
         </ul>
       </div>
 
-      {listGames.length > 0 &&
-        listGames.map((value) => (
+      {filteredList.length > 0 &&
+        filteredList.map((value) => (
           <Card
             key={value.id}
-            listCard={listGames}
-            setListCard={setListGames}
+            listCard={filteredList}
+            setListCard={listGames}
             {...value}
           />
         ))}
