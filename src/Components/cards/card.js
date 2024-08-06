@@ -24,6 +24,7 @@ export default function Card(props) {
     rg: props.rg,
     cpf: props.cpf,
     matricula: props.matricula,
+    vencimento: props.vencimento,
     valor_mensalidade: props.valor_mensalidade,
   });
 
@@ -51,6 +52,7 @@ export default function Card(props) {
         rg={props.rg}
         cpf={props.cpf}
         matricula={props.matricula}
+        vencimento={props.vencimento}
         valor_mensalidade={props.valor_mensalidade}
         listCard={props.listCard}
         setListCard={props.setListCard}
@@ -77,6 +79,8 @@ export default function Card(props) {
           <div className="table-cell">{props.cpf}</div>
           <div className="table-header-cell">Matrícula</div>
           <div className="table-cell">{props.matricula}</div>
+          <div className="table-header-cell">Valor vencimento</div>
+          <div className="table-cell">{props.vencimento}</div>
           <div className="table-header-cell">Valor Mensalidade</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
           <div className="table-header-cell">Ações</div>
@@ -108,6 +112,7 @@ export default function Card(props) {
           <div className="table-cell">{props.rg}</div>
           <div className="table-cell">{props.cpf}</div>
           <div className="table-cell">{props.matricula}</div>
+          <div className="table-cell">{props.vencimento}</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
           <div className="table-cell table-actions">
             <button

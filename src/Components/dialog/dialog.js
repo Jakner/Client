@@ -10,7 +10,7 @@ import Axios from "axios";
 export default function FormDialog(props) {
     const [editValues,setEditValues] = useState({
         id: props.id,
-        name: props.nome,
+        nome: props.nome,
         data_nascimento: props.data_nascimento,
         email: props.email,
         telefone: props.telefone,
@@ -18,6 +18,7 @@ export default function FormDialog(props) {
         rg: props.rg,
         cpf: props.cpf,
         matricula: props.matricula,
+        vencimento: props.vencimento,
         valor_mensalidade: props.valor_mensalidade,
     });
 
@@ -32,6 +33,7 @@ export default function FormDialog(props) {
             rg: editValues.rg,
             cpf: editValues.cpf,
             matricula: editValues.matricula,
+            vencimento: editValues.vencimento,
             valor_mensalidade: editValues.valor_mensalidade,
             
         });
@@ -131,6 +133,16 @@ export default function FormDialog(props) {
           id="matricula"
           label="Matricula"
           defaultValue={props.matricula}
+          onChange={handleChangeValues}
+          type="text"
+          fullWidth
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="vencimento"
+          label="Vencimento"
+          defaultValue={props.vencimento}
           onChange={handleChangeValues}
           type="text"
           fullWidth
