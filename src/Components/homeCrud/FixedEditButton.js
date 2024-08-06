@@ -25,6 +25,7 @@ function FixedEditButton(props) {
         rg={props.rg}
         cpf={props.cpf}
         matricula={props.matricula}
+        vencimento={props.vencimento}
         valor_mensalidade={props.valor_mensalidade}
         id={props.id}
       />

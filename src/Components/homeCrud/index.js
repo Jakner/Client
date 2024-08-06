@@ -17,6 +17,7 @@ export default function HomeCrud() {
     rg: '',
     cpf: '',
     matricula: '',
+    vencimento: '',
     valor_mensalidade: '',
     pesquisa: '',
   });
@@ -53,6 +54,7 @@ export default function HomeCrud() {
         rg: values.rg,
         cpf: values.cpf,
         matricula: values.matricula,
+        vencimento: values.vencimento,
         valor_mensalidade: values.valor_mensalidade,
       });
       // Atualiza a lista de itens após inserção
@@ -68,6 +70,7 @@ export default function HomeCrud() {
         rg: '',
         cpf: '',
         matricula: '',
+        vencimento: '',
         valor_mensalidade: '',
         pesquisa: '',
       });
@@ -218,6 +221,15 @@ export default function HomeCrud() {
         />
 
         <input
+          type="text"
+          name="vencimento"
+          placeholder="Vencimento"
+          className="form-control"
+          value={values.vencimento}
+          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+        />
+
+        <input
           type="number"
           name="valor_mensalidade"
           placeholder="Valor da Mensalidade"
@@ -250,6 +262,7 @@ export default function HomeCrud() {
             rg={value.rg}
             cpf={value.cpf}
             matricula={value.matricula}
+            vencimento={value.vencimento}
             valor_mensalidade={value.valor_mensalidade} />
         ))}
 
