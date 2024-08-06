@@ -4,7 +4,7 @@ import Card from "../cards/card";
 import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "./FixedEditButton";
-import { format, isSameMonth, parseISO, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 
 export default function HomeCrud() {
   const [values, setValues] = useState({
@@ -78,14 +78,28 @@ export default function HomeCrud() {
   const getDateFromDay = (dayString) => {
     const day = parseInt(dayString, 10);
     const today = new Date();
-    return new Date(today.getFullYear(), today.getMonth(), day);
+    // Define o ano e o mês corrente no horário UTC
+    return new Date(Date.UTC(today.getFullYear(), today.getMonth(), day));
   };
 
-  const totalMensalidades = listGames.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade), 0);
+  const totalMensalidades = listGames.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade || 0), 0);
 
-  const aniversariantesDoMes = listGames.filter((item) =>
-    isSameMonth(parseISO(item.data_nascimento), new Date())
-  );
+  // Aniversariantes do Mês
+  const aniversariantesDoMes = listGames.filter((item) => {
+    if (!item.data_nascimento) return false; // Ignorar se não houver informação de data de nascimento
+    const dataNascimento = parseISO(item.data_nascimento);
+    const mesNascimento = getMonth(dataNascimento);
+    const mesAtual = getMonth(new Date());
+    return mesNascimento === mesAtual;
+  });
+
+  // Cálculo da idade
+  const calcularIdade = (dataNascimento) => {
+    const nascimento = parseISO(dataNascimento);
+    const hoje = new Date();
+    const idade = differenceInYears(hoje, nascimento);
+    return idade;
+  };
 
   const startOfWeekDate = startOfWeek(new Date());
   const endOfWeekDate = endOfWeek(new Date());
@@ -165,7 +179,7 @@ export default function HomeCrud() {
         <ul>
           {aniversariantesDoMes.map((item) => (
             <li key={item.id}>
-              {item.nome}: {format(parseISO(item.data_nascimento), 'yyyy-mm-dd')}
+              {item.nome}: {format(parseISO(item.data_nascimento), 'dd/MM')} - {calcularIdade(item.data_nascimento)} anos
             </li>
           ))}
         </ul>
@@ -173,7 +187,7 @@ export default function HomeCrud() {
         <ul>
           {vencimentosDaSemana.map((item) => (
             <li key={item.id}>
-              Aluno-{item.nome}-Dia-{item.vencimento}-Valor-{item.valor_mensalidade}-Tel-{item.telefone}
+              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: {item.telefone}
             </li>
           ))}
         </ul>
