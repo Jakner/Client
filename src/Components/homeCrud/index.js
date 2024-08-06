@@ -160,7 +160,7 @@ export default function HomeCrud() {
       </div>
 
       <div className="dashboard">
-        <h3>Valor Total das Mensalidades: R$ {totalMensalidades.toFixed(2)}</h3>
+        <h3>Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
         <h3>Aniversariantes do Mês:</h3>
         <ul>
           {aniversariantesDoMes.map((item) => (
@@ -173,7 +173,7 @@ export default function HomeCrud() {
         <ul>
           {vencimentosDaSemana.map((item) => (
             <li key={item.id}>
-              {item.nome} - {item.vencimento} - {item.valor_mensalidade} - Tel - {item.telefone}
+              Aluno-{item.nome}-Dia-{item.vencimento}-Valor-{item.valor_mensalidade}-Tel-{item.telefone}
             </li>
           ))}
         </ul>
