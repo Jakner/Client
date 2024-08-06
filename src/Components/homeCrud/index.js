@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Card from "../cards/card";
-import { FaSearch, FaRedo } from "react-icons/fa";
-import { FaAngleUp } from "react-icons/fa";
+import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "./FixedEditButton";
+import { format } from "date-fns";
 
 export default function HomeCrud() {
-  // Atualize o estado para incluir os novos campos
   const [values, setValues] = useState({
     nome: '',
     data_nascimento: '',
@@ -17,6 +16,7 @@ export default function HomeCrud() {
     rg: '',
     cpf: '',
     matricula: '',
+    vencimento: '',
     valor_mensalidade: '',
     pesquisa: '',
   });
@@ -41,20 +41,10 @@ export default function HomeCrud() {
     }
   };
 
-  //Função para cadastrar produto
+  // Função para cadastrar produto
   const handleClickButton = async () => {
     try {
-      await Axios.post("https://server-mxrj.onrender.com/insert", {
-        nome: values.nome,
-        data_nascimento: values.data_nascimento,
-        email: values.email,
-        telefone: values.telefone,
-        endereco: values.endereco,
-        rg: values.rg,
-        cpf: values.cpf,
-        matricula: values.matricula,
-        valor_mensalidade: values.valor_mensalidade,
-      });
+      await Axios.post("https://server-mxrj.onrender.com/insert", values);
       // Atualiza a lista de itens após inserção
       const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
       setListGames(data);
@@ -68,6 +58,7 @@ export default function HomeCrud() {
         rg: '',
         cpf: '',
         matricula: '',
+        vencimento: '',
         valor_mensalidade: '',
         pesquisa: '',
       });
@@ -89,6 +80,9 @@ export default function HomeCrud() {
 
     fetchData();
   }, []);
+
+  // Cálculo do valor total das mensalidades
+  const totalMensalidades = listGames.reduce((acc, item) => acc + parseFloat(item.valor_mensalidade), 0);
 
   // Função para sair e limpar localStorage
   const sair = () => {
@@ -125,16 +119,8 @@ export default function HomeCrud() {
                   >
                     <FaRedo />
                   </button>
-                  {/* Botão de edição fixo */}
-                  <FixedEditButton 
-                    // Adicione qualquer prop necessária para o componente de edição
-                    listCard={listGames}
-                    setListCard={setListGames}
-                  />
-                  <button
-                    onClick={sair}
-                    className="exit"
-                  >
+                  <FixedEditButton listCard={listGames} setListCard={setListGames} />
+                  <button onClick={sair} className="exit">
                     <TbLogout />
                   </button>
                 </div>
@@ -145,94 +131,33 @@ export default function HomeCrud() {
       </header>
 
       <div className="inserts">
-        <input
-          type="text"
-          name="nome"
-          placeholder="Nome"
-          className="form-control produto"
-          value={values.nome}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="date"
-          name="data_nascimento"
-          placeholder="Data de Nascimento"
-          className="form-control"
-          value={values.data_nascimento}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className="form-control"
-          value={values.email}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="telefone"
-          placeholder="Telefone"
-          className="form-control"
-          value={values.telefone}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="endereco"
-          placeholder="Endereço"
-          className="form-control"
-          value={values.endereco}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="rg"
-          placeholder="RG"
-          className="form-control"
-          value={values.rg}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="cpf"
-          placeholder="CPF"
-          className="form-control"
-          value={values.cpf}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="text"
-          name="matricula"
-          placeholder="Matrícula"
-          className="form-control"
-          value={values.matricula}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <input
-          type="number"
-          name="valor_mensalidade"
-          placeholder="Valor da Mensalidade"
-          className="form-control"
-          value={values.valor_mensalidade}
-          onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-        />
-
-        <button
-          className="btn btn-primary botao"
-          onClick={handleClickButton}
-        >
+        {/* Inputs para os dados dos alunos */}
+        {["nome", "data_nascimento", "email", "telefone", "endereco", "rg", "cpf", "matricula", "vencimento", "valor_mensalidade"].map((field, idx) => (
+          <input
+            key={idx}
+            type={field === "valor_mensalidade" ? "number" : "text"}
+            name={field}
+            placeholder={field.replace("_", " ").toUpperCase()}
+            className="form-control"
+            value={values[field]}
+            onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
+          />
+        ))}
+        <button className="btn btn-primary botao" onClick={handleClickButton}>
           Cadastrar
         </button>
+      </div>
 
+      <div className="dashboard">
+        <h3>Valor Total das Mensalidades: R$ {totalMensalidades.toFixed(2)}</h3>
+        <h3>Datas de Vencimento e Aniversário:</h3>
+        <ul>
+          {listGames.map((item) => (
+            <li key={item.id}>
+              {item.nome}: Vencimento - {item.vencimento}, Aniversário - {format(new Date(item.data_nascimento), 'dd/MM/yyyy')}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {listGames.length > 0 &&
@@ -241,20 +166,11 @@ export default function HomeCrud() {
             key={value.id}
             listCard={listGames}
             setListCard={setListGames}
-            id={value.id}
-            nome={value.nome}
-            data_nascimento={value.data_nascimento}
-            email={value.email}
-            telefone={value.telefone}
-            endereco={value.endereco}
-            rg={value.rg}
-            cpf={value.cpf}
-            matricula={value.matricula}
-            valor_mensalidade={value.valor_mensalidade} />
+            {...value}
+          />
         ))}
 
       <a className="scroll" href="#top"><FaAngleUp /></a>
-
     </div>
   );
 }
