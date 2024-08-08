@@ -129,6 +129,11 @@ header {
     flex-direction: column;
     border: black;
 }
+.table-header-cell {
+  background-color: lightgray;
+  font-weight: 700;
+}
+
 .table-linha {
   display: none;
 }
