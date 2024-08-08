@@ -115,6 +115,15 @@ export default function HomeCrud() {
     window.location.reload();
   };
 
+  const formatPhoneNumber = (phoneNumber) => {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+    if (match) {
+      return `${match[1]}${match[2]}${match[3]}`;
+    }
+    return phoneNumber;
+  };
+
   return (
     <div className="content">
       <header className="py-3 mb-3 border-bottom">
@@ -191,7 +200,10 @@ export default function HomeCrud() {
           {vencimentosDaSemana.length > 0 ? (
             vencimentosDaSemana.map((item) => (
               <li key={item.id}>
-                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: {item.telefone}
+                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: 
+                <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer"> 
+                {item.telefone}
+                </a>
               </li>
             ))
           ) : (
