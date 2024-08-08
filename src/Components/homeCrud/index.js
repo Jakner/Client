@@ -3,7 +3,7 @@ import Axios from "axios";
 import Card from "../cards/card";
 import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
-import FixedEditButton from "./FixedEditButton";
+import FixedEditButton from "../button/FixedEditButton";
 import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 
 export default function HomeCrud() {
@@ -39,30 +39,6 @@ export default function HomeCrud() {
       console.error("Erro ao buscar itens:", error);
     }
   };
-
-  // const handleClickButton = async () => {
-  //   try {
-  //     await Axios.post("https://server-mxrj.onrender.com/insert", values);
-  //     const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
-  //     setListGames(data);
-  //     setFilteredList(data); // Atualize o estado com a lista completa após inserção
-  //     setValues({
-  //       nome: '',
-  //       data_nascimento: '',
-  //       email: '',
-  //       telefone: '',
-  //       endereco: '',
-  //       rg: '',
-  //       cpf: '',
-  //       matricula: '',
-  //       vencimento: '',
-  //       valor_mensalidade: '',
-  //       pesquisa: '',
-  //     });
-  //   } catch (error) {
-  //     console.error("Erro ao cadastrar item:", error);
-  //   }
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -163,23 +139,6 @@ export default function HomeCrud() {
           </div>
         </div>
       </header>
-      {/* <div className="inserts">
-        {["nome", "data_nascimento", "email", "telefone", "endereco", "rg", "cpf", "matricula", "vencimento", "valor_mensalidade"].map((field, idx) => (
-          <input
-            key={idx}
-            type={field === "valor_mensalidade" ? "number" : "text"}
-            name={field}
-            placeholder={field.replace("_", " ").toUpperCase()}
-            className="form-control"
-            value={values[field]}
-            onChange={(event) => handleChangeValues(event.target.name, event.target.value)}
-          />
-        ))}
-        <button className="btn btn-primary botao" onClick={handleClickButton}>
-          Cadastrar
-        </button>
-      </div> */}
-
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
         <h3 className="aniversariantes">Aniversariantes do Mês:</h3>
@@ -199,9 +158,9 @@ export default function HomeCrud() {
           {vencimentosDaSemana.length > 0 ? (
             vencimentosDaSemana.map((item) => (
               <li key={item.id}>
-                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL: 
-                <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer"> 
-                {item.telefone}
+                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL:
+                <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
+                  {item.telefone}
                 </a>
               </li>
             ))
