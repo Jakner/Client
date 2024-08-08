@@ -5,12 +5,14 @@ body{
 .dashboard{
   background: black;
     color: white;
+    border: 6px solid darkgrey;
     text-align: center;
     top: -17px;
     position: relative;
 }
 .faturamento{
   background: green;
+    border: 2px solid gray ;
     color: white;
     text-align: center;
 }
@@ -20,6 +22,7 @@ body{
     flex-direction: column;
     background: orangered;
     text-align: center;
+    border: 2px solid gray ;
     color: white;
     top: -8px;
     position: relative;
