@@ -6,7 +6,7 @@ import '../../Styles/table.css';
 import Axios from "axios";
 
 export default function Card(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   // Abre o modal de edição
   const handleClickCard = () => {
@@ -30,12 +30,15 @@ export default function Card(props) {
 
   // Função para deletar o item
   const handleDeleteGame = async () => {
-    try {
-      await Axios.delete(`https://server-mxrj.onrender.com/delete/${editValues.id}`);
-      // Atualiza a lista após exclusão
-      props.setListCard(props.listCard.filter(item => item.id !== editValues.id));
-    } catch (err) {
-      console.error("Erro ao deletar item:", err);
+    const confirmDelete = window.confirm(`Tem certeza que deseja excluir o item "${props.nome}"?`);
+    if (confirmDelete) {
+      try {
+        await Axios.delete(`https://server-mxrj.onrender.com/delete/${editValues.id}`);
+        // Atualiza a lista após exclusão
+        props.setListCard(props.listCard.filter(item => item.id !== editValues.id));
+      } catch (err) {
+        console.error("Erro ao deletar item:", err);
+      }
     }
   };
 
