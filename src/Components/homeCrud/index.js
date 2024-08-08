@@ -40,29 +40,29 @@ export default function HomeCrud() {
     }
   };
 
-  const handleClickButton = async () => {
-    try {
-      await Axios.post("https://server-mxrj.onrender.com/insert", values);
-      const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
-      setListGames(data);
-      setFilteredList(data); // Atualize o estado com a lista completa após inserção
-      setValues({
-        nome: '',
-        data_nascimento: '',
-        email: '',
-        telefone: '',
-        endereco: '',
-        rg: '',
-        cpf: '',
-        matricula: '',
-        vencimento: '',
-        valor_mensalidade: '',
-        pesquisa: '',
-      });
-    } catch (error) {
-      console.error("Erro ao cadastrar item:", error);
-    }
-  };
+  // const handleClickButton = async () => {
+  //   try {
+  //     await Axios.post("https://server-mxrj.onrender.com/insert", values);
+  //     const { data } = await Axios.get("https://server-mxrj.onrender.com/get");
+  //     setListGames(data);
+  //     setFilteredList(data); // Atualize o estado com a lista completa após inserção
+  //     setValues({
+  //       nome: '',
+  //       data_nascimento: '',
+  //       email: '',
+  //       telefone: '',
+  //       endereco: '',
+  //       rg: '',
+  //       cpf: '',
+  //       matricula: '',
+  //       vencimento: '',
+  //       valor_mensalidade: '',
+  //       pesquisa: '',
+  //     });
+  //   } catch (error) {
+  //     console.error("Erro ao cadastrar item:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
