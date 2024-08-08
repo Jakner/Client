@@ -163,8 +163,7 @@ export default function HomeCrud() {
           </div>
         </div>
       </header>
-
-      <div className="inserts">
+      {/* <div className="inserts">
         {["nome", "data_nascimento", "email", "telefone", "endereco", "rg", "cpf", "matricula", "vencimento", "valor_mensalidade"].map((field, idx) => (
           <input
             key={idx}
@@ -179,7 +178,7 @@ export default function HomeCrud() {
         <button className="btn btn-primary botao" onClick={handleClickButton}>
           Cadastrar
         </button>
-      </div>
+      </div> */}
 
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
