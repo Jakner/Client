@@ -173,8 +173,8 @@ export default function HomeCrud() {
       </div>
 
       <div className="dashboard">
-        <h3>Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
-        <h3>Aniversariantes do Mês:</h3>
+        <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
+        <h3 className="aniversariantes">Aniversariantes do Mês:</h3>
         <ul>
           {aniversariantesDoMes.length > 0 ? (
             aniversariantesDoMes.map((item) => (
@@ -186,7 +186,7 @@ export default function HomeCrud() {
             <li>Nenhum aniversariante encontrado.</li>
           )}
         </ul>
-        <h3>Vencimentos da Semana:</h3>
+        <h3 className="vencimentos">Vencimentos da Semana:</h3>
         <ul>
           {vencimentosDaSemana.length > 0 ? (
             vencimentosDaSemana.map((item) => (

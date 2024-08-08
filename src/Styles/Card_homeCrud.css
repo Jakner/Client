@@ -2,6 +2,34 @@ body{
   background-color: whitesmoke;
 }
 
+.dashboard{
+  background: black;
+    color: white;
+    text-align: center;
+    top: -17px;
+    position: relative;
+}
+.faturamento{
+  background: green;
+    color: white;
+    text-align: center;
+}
+
+.aniversariantes{
+  display: flex;
+    flex-direction: column;
+    background: orangered;
+    text-align: center;
+    color: white;
+    top: -8px;
+    position: relative;
+}
+.vencimentos{
+  background: red;
+  color: white;
+  text-align: center;
+}
+
 header img {
   width: 50%;
   height: 50%;
