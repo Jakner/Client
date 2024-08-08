@@ -128,8 +128,8 @@ header {
     width: 100%;
     flex-direction: column;
     border: black;
-
-    .table-linha {
+}
+.table-linha {
   display: none;
 }
 .quebra {
