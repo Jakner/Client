@@ -128,13 +128,8 @@ header {
     width: 100%;
     flex-direction: column;
     border: black;
-}
-.table-header-cell {
-  background-color: lightgray;
-  font-weight: 700;
-}
 
-.table-linha {
+    .table-linha {
   display: none;
 }
 .quebra {
