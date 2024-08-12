@@ -1,3 +1,4 @@
+import Card from "../cards/card";
 export function Items({ listGames, handleClickCard, handleDeleteGame }) {
     return (
       <div>
