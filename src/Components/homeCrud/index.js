@@ -5,6 +5,7 @@ import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "../button/FixedEditButton";
 import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
+import { useNavigate } from 'react-router-dom';
 
 export default function HomeCrud() {
   const [values, setValues] = useState({
@@ -21,31 +22,15 @@ export default function HomeCrud() {
     pesquisa: '',
   });
   const [listGames, setListGames] = useState([]);
-  const [filteredList, setFilteredList] = useState([]); // Estado para armazenar a lista filtrada
-
-  function handleChangeValues(name, value) {
-    setValues((prevValue) => ({
-      ...prevValue,
-      [name]: value,
-    }));
-  }
-
-  const handleClickSearch = async () => {
-    const nome = values.pesquisa;
-    try {
-      const { data } = await Axios.get(`https://server-mxrj.onrender.com/getCards/${nome}`);
-      setFilteredList(data); // Atualize o estado com a lista filtrada
-    } catch (error) {
-      console.error("Erro ao buscar itens:", error);
-    }
-  };
-
+  const [filteredList, setFilteredList] = useState([]);
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await Axios.get('https://server-mxrj.onrender.com/get');
         setListGames(data);
-        setFilteredList(data); // Inicialmente, a lista filtrada é igual à lista completa
+        setFilteredList(data);
       } catch (error) {
         console.error("Erro ao buscar todos os itens:", error);
       }
@@ -53,6 +38,36 @@ export default function HomeCrud() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Tempo para o logout automático em milissegundos (ex: 10 minutos)
+    const logoutTime = 10 * 60 * 1000;
+
+    const timer = setTimeout(() => {
+      localStorage.clear();
+      navigate('/login'); // Redireciona para a página de login
+      window.location.reload();
+    }, logoutTime);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
+  const handleChangeValues = (name, value) => {
+    setValues((prevValue) => ({
+      ...prevValue,
+      [name]: value,
+    }));
+  };
+
+  const handleClickSearch = async () => {
+    const nome = values.pesquisa;
+    try {
+      const { data } = await Axios.get(`https://server-mxrj.onrender.com/getCards/${nome}`);
+      setFilteredList(data);
+    } catch (error) {
+      console.error("Erro ao buscar itens:", error);
+    }
+  };
 
   const getDateFromDay = (dayString) => {
     const day = parseInt(dayString, 10);
