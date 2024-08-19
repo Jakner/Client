@@ -55,16 +55,16 @@ function Login({ logado = false }) {
       </div>
 
       <div className="right-login">
-        <div className="card-login">
-          <div className="user-links">
-            <div className="user-link-home">
-              {!logado && <Link to="/">Home</Link>}
-            </div>
+        // <div className="card-login">
+        //   <div className="user-links">
+        //     <div className="user-link-home">
+        //       {!logado && <Link to="/">Home</Link>}
+        //     </div>
 
-            <div className="user-link-cad">
-              {!logado && <Link to="/cadastro">Cadastro</Link>}
-            </div>
-          </div>
+        //     <div className="user-link-cad">
+        //       {!logado && <Link to="/cadastro">Cadastro</Link>}
+        //     </div>
+        //   </div>
           <h1>LOGIN</h1>
           <Formik
             initialValues={{}}
