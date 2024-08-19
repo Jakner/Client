@@ -7,14 +7,14 @@ import FixedEditButton from "../button/FixedEditButton";
 import { parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 import { Link, useNavigate } from 'react-router-dom';
 
+function Login({ logado = false }) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
 const formatDate = (dateString) => {
   const [year, month, day] = dateString.split('T')[0].split('-');
   return `${day}/${month}`;
 };
-
-function Login({ logado = false }) {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
 
 export default function HomeCrud() {
   const [values, setValues] = useState({
