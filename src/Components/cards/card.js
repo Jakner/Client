@@ -11,6 +11,12 @@ const formatDate = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
+// Função para formatar o CPF
+const formatCPF = (cpf) => {
+  return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+};
+
+
 export default function Card(props) {
   const [open, setOpen] = useState(false);
 
@@ -85,7 +91,7 @@ export default function Card(props) {
           <div className="table-header-cell">RG</div>
           <div className="table-cell">{props.rg}</div>
           <div className="table-header-cell">CPF</div>
-          <div className="table-cell">{props.cpf}</div>
+          <div className="table-cell">{formatCPF(props.cpf)}</div>
           <div className="table-header-cell">Matrícula</div>
           <div className="table-cell">{props.matricula}</div>
           <div className="table-header-cell">Valor vencimento</div>
@@ -119,7 +125,7 @@ export default function Card(props) {
           <div className="table-cell">{props.telefone}</div>
           <div className="table-cell">{props.endereco}</div>
           <div className="table-cell">{props.rg}</div>
-          <div className="table-cell">{props.cpf}</div>
+          <div className="table-cell">{formatCPF(props.cpf)}</div>
           <div className="table-cell">{props.matricula}</div>
           <div className="table-cell">{props.vencimento}</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
