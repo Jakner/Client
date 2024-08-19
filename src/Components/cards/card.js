@@ -7,8 +7,8 @@ import Axios from "axios";
 
 // Função para formatar a data
 const formatDate = (dateString) => {
-  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-  return new Date(dateString).toLocaleDateString('pt-BR', options);
+  const [year, month, day] = dateString.split('T')[0].split('-');
+  return `${day}/${month}/${year}`;
 };
 
 export default function Card(props) {
