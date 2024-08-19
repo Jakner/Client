@@ -5,11 +5,7 @@ import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "../button/FixedEditButton";
 import { parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
-import { Link, useNavigate } from 'react-router-dom';
-
-function Login({ logado = false }) {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+import { useNavigate } from 'react-router-dom';
 
 const formatDate = (dateString) => {
   const [year, month, day] = dateString.split('T')[0].split('-');
@@ -163,9 +159,6 @@ export default function HomeCrud() {
           </div>
         </div>
       </header>
-       <div className="user-link-cad">
-             {!logado && <Link to="/cadastro">Cadastro</Link>}
-      </div>
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
         <h3 className="aniversariantes">Aniversariantes do Mês:</h3>
