@@ -5,6 +5,12 @@ import '../../Styles/Card_homeCrud.css';
 import '../../Styles/table.css';
 import Axios from "axios";
 
+// Função para formatar a data
+const formatDate = (dateString) => {
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  return new Date(dateString).toLocaleDateString('pt-BR', options);
+};
+
 export default function Card(props) {
   const [open, setOpen] = useState(false);
 
@@ -69,7 +75,7 @@ export default function Card(props) {
           <div className="table-header-cell">Nome</div>
           <div className="table-cell">{props.nome}</div>
           <div className="table-header-cell">Data Nascimento</div>
-          <div className="table-cell">{props.data_nascimento}</div>
+          <div className="table-cell">{formatDate(props.data_nascimento)}</div> {/* Formatação da data */}
           <div className="table-header-cell">Email</div>
           <div className="table-cell">{props.email}</div>
           <div className="table-header-cell">Telefone</div>
@@ -108,7 +114,7 @@ export default function Card(props) {
         <div className="table-row">
           <div className="table-cell">{props.id}</div>
           <div className="table-cell">{props.nome}</div>
-          <div className="table-cell">{props.data_nascimento}</div>
+          <div className="table-cell">{formatDate(props.data_nascimento)}</div> {/* Formatação da data */}
           <div className="table-cell">{props.email}</div>
           <div className="table-cell">{props.telefone}</div>
           <div className="table-cell">{props.endereco}</div>
