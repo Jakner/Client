@@ -7,10 +7,9 @@ import FixedEditButton from "../button/FixedEditButton";
 import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 import { useNavigate } from 'react-router-dom';
 
-// Função para formatar a data
 const formatDate = (dateString) => {
-  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-  return new Date(dateString).toLocaleDateString('pt-BR', options);
+  const [year, month, day] = dateString.split('T')[0].split('-');
+  return `${day}/${month}/${year}`;
 };
 
 export default function HomeCrud() {
