@@ -50,7 +50,7 @@ export default function HomeCrud() {
 
     const timer = setTimeout(() => {
       localStorage.clear();
-      navigate('/login'); // Redireciona para a página de login
+      navigate('/'); // Redireciona para a página de login
       window.location.reload();
     }, logoutTime);
 
