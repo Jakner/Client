@@ -12,6 +12,10 @@ const formatDate = (dateString) => {
   return `${day}/${month}`;
 };
 
+function Login({ logado = false }) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
 export default function HomeCrud() {
   const [values, setValues] = useState({
     nome: '',
