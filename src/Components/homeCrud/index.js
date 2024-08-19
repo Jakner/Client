@@ -7,6 +7,12 @@ import FixedEditButton from "../button/FixedEditButton";
 import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 import { useNavigate } from 'react-router-dom';
 
+// Função para formatar a data
+const formatDate = (dateString) => {
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  return new Date(dateString).toLocaleDateString('pt-BR', options);
+};
+
 export default function HomeCrud() {
   const [values, setValues] = useState({
     nome: '',
@@ -161,7 +167,7 @@ export default function HomeCrud() {
           {aniversariantesDoMes.length > 0 ? (
             aniversariantesDoMes.map((item) => (
               <li key={item.id}>
-                {item.nome}: {format(parseISO(item.data_nascimento), 'dd/MM')} - {calcularIdade(item.data_nascimento)} anos
+                {item.nome}: {format(parseISO(formatDate(item.data_nascimento), 'dd/MM'))} - {calcularIdade(item.data_nascimento)} anos
               </li>
             ))
           ) : (
