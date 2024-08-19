@@ -166,7 +166,7 @@ export default function HomeCrud() {
           {aniversariantesDoMes.length > 0 ? (
             aniversariantesDoMes.map((item) => (
               <li key={item.id}>
-                {item.nome}: {format(parseISO(formatDate(item.data_nascimento), 'dd/MM'))} - {calcularIdade(item.data_nascimento)} anos
+                {item.nome}: {formatDate(item.data_nascimento)} - {calcularIdade(item.data_nascimento)} anos
               </li>
             ))
           ) : (
