@@ -4,7 +4,7 @@ import Card from "../cards/card";
 import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "../button/FixedEditButton";
-import { format, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
+import { startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 import { useNavigate } from 'react-router-dom';
 
 const formatDate = (dateString) => {
