@@ -8,7 +8,7 @@ import { parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, 
 import { useNavigate } from 'react-router-dom';
 
 const formatDate = (dateString) => {
-  const [year, month, day] = dateString.split('T')[0].split('-');
+  const [month, day] = dateString.split('T')[0].split('-');
   return `${day}/${month}`;
 };
 
