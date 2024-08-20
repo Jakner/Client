@@ -125,7 +125,7 @@ export default function Card(props) {
           <div className="table-cell">{props.telefone}</div>
           <div className="table-cell">{props.endereco}</div>
           <div className="table-cell">{props.rg}</div>
-          <div className="table-cell">{formatCPF(props.cpf)}</div>
+          <div className="table-cell">{props.cpf}</div>
           <div className="table-cell">{props.matricula}</div>
           <div className="table-cell">{props.vencimento}</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
