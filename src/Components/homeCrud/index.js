@@ -4,7 +4,7 @@ import Card from "../cards/card";
 import { FaSearch, FaRedo, FaAngleUp } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import FixedEditButton from "../button/FixedEditButton";
-import { parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
+import { subDays, parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, getMonth } from "date-fns";
 import { useNavigate } from 'react-router-dom';
 
 const formatDate = (dateString) => {
@@ -120,12 +120,16 @@ export default function HomeCrud() {
     return phoneNumber;
   };
 
-  // Filtrar alunos ativos com base em vencimento futuro
-  const alunosAtivos = filteredList.filter(item => {
-    if (!item.vencimento) return false;
-    const dataVencimento = getDateFromDay(item.vencimento);
-    return dataVencimento >= new Date(); // Considera ativo se o vencimento é hoje ou no futuro
-  });
+// Ajustar o critério para incluir alunos cujo vencimento passou nos últimos 30 dias
+const alunosAtivos = filteredList.filter(item => {
+  if (!item.vencimento) return false;
+  
+  const dataVencimento = getDateFromDay(item.vencimento);
+  const hoje = new Date();
+  const limiteVencimento = subDays(hoje, 30); // Considera ativo até 30 dias após o vencimento
+
+  return dataVencimento >= limiteVencimento;
+});
 
   const numeroAlunosAtivos = alunosAtivos.length;
 
