@@ -8,8 +8,8 @@ import { parseISO, startOfWeek, endOfWeek, isWithinInterval, differenceInYears, 
 import { useNavigate } from 'react-router-dom';
 
 const formatDate = (dateString) => {
-  const [month, day] = dateString.split('T')[0].split('-');
-  return `${day}/${month}`;
+  const [year, month, day] = dateString.split('T')[0].split('-');
+  return `${day}/${month}/${year}`;
 };
 
 export default function HomeCrud() {
@@ -29,7 +29,7 @@ export default function HomeCrud() {
   const [listGames, setListGames] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,6 +120,17 @@ export default function HomeCrud() {
     return phoneNumber;
   };
 
+  // Filtrar alunos ativos com base em vencimento futuro
+  const alunosAtivos = filteredList.filter(item => {
+    if (!item.vencimento) return false;
+    const dataVencimento = getDateFromDay(item.vencimento);
+    return dataVencimento >= new Date(); // Considera ativo se o vencimento é hoje ou no futuro
+  });
+
+  const numeroAlunosAtivos = alunosAtivos.length;
+
+  const totalAlunos = filteredList.length;
+
   return (
     <div className="content">
       <header className="py-3 mb-3 border-bottom">
@@ -161,8 +172,12 @@ export default function HomeCrud() {
       </header>
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
+        {/* Exibir número de alunos ativos */}
+        {/* Exibir total de alunos */}
+        <h3 className="total-alunos">Total de Alunos: {totalAlunos}</h3>
+        <h3 className="alunos-ativos">Alunos Ativos: {numeroAlunosAtivos}</h3>
         <h3 className="aniversariantes">Aniversariantes do Mês:</h3>
-        <ul>
+            <ul>
           {aniversariantesDoMes.length > 0 ? (
             aniversariantesDoMes.map((item) => (
               <li key={item.id}>
