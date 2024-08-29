@@ -1,9 +1,7 @@
-// Component for the fixed edit button
 import React, { useState } from "react";
 import FormDialogadd from "../dialog/dialogadd";
 import { FaEdit } from "react-icons/fa";
 import '../../Styles/Card_homeCrud.css';
-
 
 function FixedEditButton(props) {
   const [open, setOpen] = useState(false);
@@ -28,6 +26,7 @@ function FixedEditButton(props) {
         vencimento={props.vencimento}
         valor_mensalidade={props.valor_mensalidade}
         id={props.id}
+        status_pagamento={props.status_pagamento} // Adiciona o status de pagamento
       />
       <button
         className="btn btn-primary botao"

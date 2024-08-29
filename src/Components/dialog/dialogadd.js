@@ -20,6 +20,7 @@ export default function FormDialogadd(props) {
         matricula: props.matricula,
         vencimento: props.vencimento,
         valor_mensalidade: props.valor_mensalidade,
+        status_pagamento: false, // Adicionado campo de status de pagamento
     });
 
     const handleAddAluno = async () => {
@@ -35,6 +36,7 @@ export default function FormDialogadd(props) {
             matricula: editValues.matricula,
             vencimento: editValues.vencimento,
             valor_mensalidade: editValues.valor_mensalidade,
+            status_pagamento: editValues.status_pagamento, // Incluído na requisição
         });
         handleClose();
         window.location.reload();
@@ -67,7 +69,6 @@ export default function FormDialogadd(props) {
 
     const handleValorChange = (e) => {
         const { value } = e.target;
-        // Permite apenas números
         setEditValues(prevValues => ({
             ...prevValues,
             valor_mensalidade: value.replace(/[^0-9]/g, ''),
@@ -76,7 +77,6 @@ export default function FormDialogadd(props) {
 
     const handleTelefoneChange = (e) => {
         const { value } = e.target;
-        // Permite apenas números
         setEditValues(prevValues => ({
             ...prevValues,
             telefone: value.replace(/[^0-9]/g, ''),
@@ -85,7 +85,6 @@ export default function FormDialogadd(props) {
 
     const handleRgChange = (e) => {
         const { value } = e.target;
-        // Permite apenas números
         setEditValues(prevValues => ({
             ...prevValues,
             rg: value.replace(/[^0-9]/g, ''),
@@ -123,7 +122,7 @@ export default function FormDialogadd(props) {
                     label="Email"
                     value={editValues.email}
                     onChange={handleChangeValues}
-                    type="email" // Garante que o valor seja um email válido
+                    type="email"
                     fullWidth
                 />
                 <TextField
@@ -134,8 +133,7 @@ export default function FormDialogadd(props) {
                     value={editValues.telefone}
                     onChange={handleTelefoneChange}
                     type="text"
-                    inputMode="numeric" // Exibe teclado numérico em dispositivos móveis
-                    pattern="[0-9]*" // Validação de números apenas
+                    inputMode="numeric"
                     fullWidth
                 />
                 <TextField
@@ -156,8 +154,7 @@ export default function FormDialogadd(props) {
                     value={editValues.rg}
                     onChange={handleRgChange}
                     type="text"
-                    inputMode="numeric" // Exibe teclado numérico em dispositivos móveis
-                    pattern="[0-9]*" // Validação de números apenas
+                    inputMode="numeric"
                     fullWidth
                 />
                 <TextField
@@ -198,8 +195,17 @@ export default function FormDialogadd(props) {
                     value={editValues.valor_mensalidade}
                     onChange={handleValorChange}
                     type="text"
-                    inputMode="numeric" // Exibe teclado numérico em dispositivos móveis
-                    pattern="[0-9]*" // Validação de números apenas
+                    inputMode="numeric"
+                    fullWidth
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="status_pagamento"
+                    label="Status de Pagamento"
+                    value={editValues.status_pagamento}
+                    onChange={(e) => setEditValues({ ...editValues, status_pagamento: e.target.checked })}
+                    type="checkbox"
                     fullWidth
                 />
             </DialogContent>
