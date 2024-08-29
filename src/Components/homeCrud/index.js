@@ -25,10 +25,16 @@ export default function HomeCrud() {
     vencimento: '',
     valor_mensalidade: '',
     pesquisa: '',
+    status_pagamento: false, // Adicionado campo de status de pagamento
   });
   const [listGames, setListGames] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const navigate = useNavigate();
+
+    // Função para lidar com o pagamento
+    const handlePaymentStatus = (item) => {
+      return item.status_pagamento ? "Pago" : "Não Pago";
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -193,20 +199,20 @@ const alunosAtivos = filteredList.filter(item => {
           )}
         </ul>
         <h3 className="vencimentos">Vencimentos da Semana:</h3>
-        <ul>
-          {vencimentosDaSemana.length > 0 ? (
-            vencimentosDaSemana.map((item) => (
-              <li key={item.id}>
-                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - TEL:
-                <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
-                  {item.telefone}
-                </a>
-              </li>
-            ))
-          ) : (
-            <li>Nenhum vencimento encontrado para esta semana.</li>
-          )}
-        </ul>
+      <ul>
+        {vencimentosDaSemana.length > 0 ? (
+          vencimentosDaSemana.map((item) => (
+            <li key={item.id}>
+              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - STATUS: {handlePaymentStatus(item)} - TEL:
+              <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
+                {item.telefone}
+              </a>
+            </li>
+          ))
+        ) : (
+          <li>Nenhum vencimento encontrado para esta semana.</li>
+        )}
+      </ul>
       </div>
 
       {filteredList.length > 0 &&
