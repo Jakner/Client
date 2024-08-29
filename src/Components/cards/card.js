@@ -7,6 +7,10 @@ import Axios from "axios";
 
 // Função para formatar a data
 const formatDate = (dateString) => {
+  if (!dateString) {
+    return 'Data não disponível'; // Ou outro texto padrão
+  }
+
   const [year, month, day] = dateString.split('T')[0].split('-');
   return `${day}/${month}/${year}`;
 };
