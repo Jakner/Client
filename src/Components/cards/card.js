@@ -42,6 +42,7 @@ export default function Card(props) {
     matricula: props.matricula,
     vencimento: props.vencimento,
     valor_mensalidade: props.valor_mensalidade,
+    status_pagamento: props.status_pagamento
   });
 
   // Função para deletar o item
@@ -73,9 +74,10 @@ export default function Card(props) {
         matricula={props.matricula}
         vencimento={props.vencimento}
         valor_mensalidade={props.valor_mensalidade}
+        status_pagamento={props.status_pagamento}
         listCard={props.listCard}
         setListCard={props.setListCard}
-        id={props.id} 
+        id={props.id}
       />
 
       <div className="table-container">
@@ -102,6 +104,8 @@ export default function Card(props) {
           <div className="table-cell">{props.vencimento}</div>
           <div className="table-header-cell">Valor Mensalidade</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
+          <div className="table-header-cell">Status Pagamento</div>
+          <div className="table-cell">{props.status_pagamento}</div>
           <div className="table-header-cell">Ações</div>
           <div className="table-cell table-actions">
             <button
@@ -133,6 +137,7 @@ export default function Card(props) {
           <div className="table-cell">{props.matricula}</div>
           <div className="table-cell">{props.vencimento}</div>
           <div className="table-cell">{props.valor_mensalidade}</div>
+          <div className="table-cell">{props.status_pagamento}</div>
           <div className="table-cell table-actions">
             <button
               type="button"
