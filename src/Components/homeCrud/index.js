@@ -29,6 +29,7 @@ export default function HomeCrud() {
   });
   const [listGames, setListGames] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
+  const [totalPagamentos, setTotalPagamentos] = useState(0);
   const navigate = useNavigate();
 
   const atualizarTotalPagamentos = (item) => {
