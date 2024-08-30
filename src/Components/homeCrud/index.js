@@ -29,22 +29,11 @@ export default function HomeCrud() {
   });
   const [listGames, setListGames] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-  const [totalPagamentos, setTotalPagamentos] = useState(0);
   const navigate = useNavigate();
-
-  const atualizarTotalPagamentos = (item) => {
-    if (item.status_pagamento) {
-      setTotalPagamentos((prevTotal) => prevTotal + parseFloat(item.valor_mensalidade || 0));
-    }
-  };
 
   // Função para lidar com o pagamento
   const handlePaymentStatus = (item) => {
-    const status = item.status_pagamento ? "Pago" : "Não Pago";
-    if (status === "Pago") {
-      atualizarTotalPagamentos(item);
-    }
-    return status;
+    return item.status_pagamento ? "Pago" : "Não Pago";
   };
 
   useEffect(() => {
@@ -193,7 +182,6 @@ export default function HomeCrud() {
       </header>
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
-        <h3 className="total-pagamentos">Total de Pagamentos Realizados: R$ {totalPagamentos.toFixed(2)}</h3>
         {/* Exibir número de alunos ativos */}
         {/* Exibir total de alunos */}
         <h3 className="total-alunos">Total de Alunos: {totalAlunos}</h3>
