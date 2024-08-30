@@ -3,12 +3,12 @@ body{
 }
 .status.pago {
   color: green;
-  font: bold;
+  font-weight: bold;
 }
 
 .status.nao-pago {
-  color: red;
-  font: bold;
+  color: dodgerblue;
+  font-weight: bold;
 }
 
 .dashboard{

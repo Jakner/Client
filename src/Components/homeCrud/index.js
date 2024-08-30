@@ -31,10 +31,20 @@ export default function HomeCrud() {
   const [filteredList, setFilteredList] = useState([]);
   const navigate = useNavigate();
 
-    // Função para lidar com o pagamento
-    const handlePaymentStatus = (item) => {
-      return item.status_pagamento ? "Pago" : "Não Pago";
-    };
+  const atualizarTotalPagamentos = (item) => {
+    if (item.status_pagamento) {
+      setTotalPagamentos((prevTotal) => prevTotal + parseFloat(item.valor_mensalidade || 0));
+    }
+  };
+
+  // Função para lidar com o pagamento
+  const handlePaymentStatus = (item) => {
+    const status = item.status_pagamento ? "Pago" : "Não Pago";
+    if (status === "Pago") {
+      atualizarTotalPagamentos(item);
+    }
+    return status;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,16 +136,16 @@ export default function HomeCrud() {
     return phoneNumber;
   };
 
-// Ajustar o critério para incluir alunos cujo vencimento passou nos últimos 30 dias
-const alunosAtivos = filteredList.filter(item => {
-  if (!item.vencimento) return false;
-  
-  const dataVencimento = getDateFromDay(item.vencimento);
-  const hoje = new Date();
-  const limiteVencimento = subDays(hoje, 30); // Considera ativo até 30 dias após o vencimento
+  // Ajustar o critério para incluir alunos cujo vencimento passou nos últimos 30 dias
+  const alunosAtivos = filteredList.filter(item => {
+    if (!item.vencimento) return false;
 
-  return dataVencimento >= limiteVencimento;
-});
+    const dataVencimento = getDateFromDay(item.vencimento);
+    const hoje = new Date();
+    const limiteVencimento = subDays(hoje, 30); // Considera ativo até 30 dias após o vencimento
+
+    return dataVencimento >= limiteVencimento;
+  });
 
   const numeroAlunosAtivos = alunosAtivos.length;
 
@@ -182,12 +192,13 @@ const alunosAtivos = filteredList.filter(item => {
       </header>
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
+        <h3 className="total-pagamentos">Total de Pagamentos Realizados: R$ {totalPagamentos.toFixed(2)}</h3>
         {/* Exibir número de alunos ativos */}
         {/* Exibir total de alunos */}
         <h3 className="total-alunos">Total de Alunos: {totalAlunos}</h3>
         <h3 className="alunos-ativos">Alunos Ativos: {numeroAlunosAtivos}</h3>
         <h3 className="aniversariantes">Aniversariantes do Mês:</h3>
-            <ul>
+        <ul>
           {aniversariantesDoMes.length > 0 ? (
             aniversariantesDoMes.map((item) => (
               <li key={item.id}>
@@ -199,21 +210,21 @@ const alunosAtivos = filteredList.filter(item => {
           )}
         </ul>
         <h3 className="vencimentos">Vencimentos da Semana:</h3>
-      <ul>
-        {vencimentosDaSemana.length > 0 ? (
-          vencimentosDaSemana.map((item) => (
-            <li key={item.id}>
-              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - STATUS: <span className={`status ${item.status_pagamento ? 'pago' : 'nao-pago'}`}>
-              {handlePaymentStatus(item)}</span>  - TEL:
-              <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
-                {item.telefone}
-              </a>
-            </li>
-          ))
-        ) : (
-          <li>Nenhum vencimento encontrado para esta semana.</li>
-        )}
-      </ul>
+        <ul>
+          {vencimentosDaSemana.length > 0 ? (
+            vencimentosDaSemana.map((item) => (
+              <li key={item.id}>
+                {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - STATUS: <span className={`status ${item.status_pagamento ? 'pago' : 'nao-pago'}`}>
+                  {handlePaymentStatus(item)}</span>  - TEL:
+                <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
+                  {item.telefone}
+                </a>
+              </li>
+            ))
+          ) : (
+            <li>Nenhum vencimento encontrado para esta semana.</li>
+          )}
+        </ul>
       </div>
 
       {filteredList.length > 0 &&
