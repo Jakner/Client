@@ -1,8 +1,14 @@
 body{
   background-color: whitesmoke;
 }
-.pagamento {
-  color: aqua;
+.status.pago {
+  color: green;
+  font: bold;
+}
+
+.status.nao-pago {
+  color: red;
+  font: bold;
 }
 
 .dashboard{

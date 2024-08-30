@@ -203,7 +203,8 @@ const alunosAtivos = filteredList.filter(item => {
         {vencimentosDaSemana.length > 0 ? (
           vencimentosDaSemana.map((item) => (
             <li key={item.id}>
-              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - STATUS: <p className="pagamento" >{handlePaymentStatus(item)} </p>  - TEL:
+              {item.nome} - DIA: {item.vencimento} - VALOR: {item.valor_mensalidade} - STATUS: <span className={`status ${item.status_pagamento ? 'pago' : 'nao-pago'}`}>
+              {handlePaymentStatus(item)}</span>  - TEL:
               <a href={`https://wa.me/55${formatPhoneNumber(item.telefone)}`} target="_blank" rel="noopener noreferrer">
                 {item.telefone}
               </a>
