@@ -1,6 +1,9 @@
 body{
   background-color: whitesmoke;
 }
+.pagamento {
+  color: aqua;
+}
 
 .dashboard{
   background: black;
