@@ -29,7 +29,7 @@ export default function HomeCrud() {
   });
   const [listGames, setListGames] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-  const [setTotalPagamentos] = useState(0);
+  const [totalPagamentos, setTotalPagamentos] = useState(0);
   const navigate = useNavigate();
 
   const atualizarTotalPagamentos = (item) => {
@@ -193,7 +193,7 @@ export default function HomeCrud() {
       </header>
       <div className="dashboard">
         <h3 className="faturamento">Faturamento Mês: R$ {totalMensalidades.toFixed(2)}</h3>
-        {/* <h3 className="total-pagamentos">Total de Pagamentos Realizados: R$ {totalPagamentos.toFixed(2)}</h3> */}
+        <h3 className="total-pagamentos">Total de Pagamentos Realizados: R$ {totalPagamentos.toFixed(2)}</h3>
         {/* Exibir número de alunos ativos */}
         {/* Exibir total de alunos */}
         <h3 className="total-alunos">Total de Alunos: {totalAlunos}</h3>
