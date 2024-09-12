@@ -52,7 +52,7 @@ export default function HomeCrud() {
 
   useEffect(() => {
     // Tempo para o logout automático em milissegundos (ex: 10 minutos)
-    const logoutTime = 10 * 60 * 1000;
+    const logoutTime = 120 * 60 * 1000;
 
     const timer = setTimeout(() => {
       localStorage.clear();
